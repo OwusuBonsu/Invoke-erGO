@@ -25,7 +25,7 @@
 	<key>FIRAnalyticsDebugEnabled</key>
 	<false/>
 	<key>FirebaseAppDelegateProxyEnabled</key>
-	<false/>
+	<true/>
 	<key>FirebaseScreenReportingEnabled</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>

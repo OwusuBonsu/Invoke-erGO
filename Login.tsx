@@ -1,9 +1,10 @@
 import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/messaging';
 import { Text, TextInput, Button, SafeAreaView, View } from 'react-native';
 import React, { useState, useEffect } from "react";
 
 
-export default function Login({user, setUser, setSignedIn}) {
+export default function Login({ user, setUser, setSignedIn }) {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [email, setEmail] = useState('');
@@ -51,25 +52,35 @@ export default function Login({user, setUser, setSignedIn}) {
       .catch((err) => console.log(err));
   }
 
+  const getToken = async () => {
+    const authStatus = await firebase.messaging().requestPermission();
+    if (authStatus === 1) {
+      let fcmToken = await firebase.messaging().getToken();
+      if (fcmToken) {
+        console.log('Firebase Push Token is:', fcmToken);
+      }
+    }
+  }
   if (initializing) return null;
 
   return (
     <>
       <SafeAreaView>
         <View>
-      <TextInput
-        placeholder="email"
-        value={email}
-        onChangeText={(emailText) => setEmail(emailText)}
+          <TextInput
+            placeholder="email"
+            value={email}
+            onChangeText={(emailText) => setEmail(emailText)}
           />
-      <TextInput
-        placeholder="password"
-        value={password}
-        onChangeText={(passText) => setPassword(passText)}
-      />
-      <Button title="Login" onPress={() => loginFunction(email, password)} />
+          <TextInput
+            placeholder="password"
+            value={password}
+            onChangeText={(passText) => setPassword(passText)}
+          />
+          <Button title="Login" onPress={() => loginFunction(email, password)} />
           <Button title="Sign Up" onPress={() => signUpFunction(email, password)} />
-          </View>
+          <Button title="Get token" onPress={() => getToken()} />
+        </View>
       </SafeAreaView>
     </>
   );

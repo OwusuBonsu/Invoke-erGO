@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,15 +12,13 @@ import {
   requestUserPermission,
   NotificationListener,
 } from './src/utils/pushNotification_helper';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Login from './Login';
 import Dashboard from './Dashboard';
-import auth from '@react-native-firebase/auth';
-import {HealthkitDataContext} from './context/HealthkitDataContext';
-import {Platform} from 'react-native';
-import messaging from '@react-native-firebase/messaging';
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import PushNotification from "react-native-push-notification";
+import { firebase } from '@react-native-firebase/messaging';
+import { HealthkitDataContext } from './context/HealthkitDataContext';
+import { Platform } from 'react-native';
+
 
 
 export default function App() {
@@ -32,11 +30,6 @@ export default function App() {
     console.log('User: ' + JSON.stringify(user));
   }, [user]);
 
-  useEffect(() => {
-    console.log(healthKitData);
-    requestUserPermission();
-    NotificationListener();
-  }, [healthKitData]);
 
 
   return (
@@ -45,7 +38,7 @@ export default function App() {
       <SafeAreaView>
         {signedIn ? (
           <HealthkitDataContext.Provider
-            value={{healthKitData, getHealthKitData}}>
+            value={{ healthKitData, getHealthKitData }}>
             <Dashboard user={user} setSignedIn={setSignedIn} />
           </HealthkitDataContext.Provider>
         ) : (
