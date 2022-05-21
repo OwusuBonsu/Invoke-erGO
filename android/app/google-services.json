@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "739349293266",
+    "project_id": "ergo-database",
+    "storage_bucket": "ergo-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739349293266:android:814a0e848ed58fb116e50b",
+        "android_client_info": {
+          "package_name": "com.invoke.ergo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739349293266-gvnmmjtf8n9bh957i5u2gh4onkguev97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxn39z8l0XNays1QKPLVS4Th3uSOCgGnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739349293266-gvnmmjtf8n9bh957i5u2gh4onkguev97.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "739349293266-tsg9o0dqjpsti38p6j4fak9ho8p2n44p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.Invoke.native.tracker.phone"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,37 +8,49 @@ import {
   StatusBar,
   ShadowPropTypesIOS,
 } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import {
+  requestUserPermission,
+  NotificationListener,
+} from './src/utils/pushNotification_helper';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import auth from '@react-native-firebase/auth';
-import { HealthkitDataContext } from './context/HealthkitDataContext';
+import {HealthkitDataContext} from './context/HealthkitDataContext';
+import {Platform} from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import PushNotification from "react-native-push-notification";
 
 
 export default function App() {
   const [user, setUser] = useState();
   const [signedIn, setSignedIn] = useState(false);
-  const [healthKitData, getHealthKitData] = useState([])
+  const [healthKitData, getHealthKitData] = useState([]);
 
   useEffect(() => {
-    console.log("User: " + JSON.stringify(user))
-  }, [user])
+    console.log('User: ' + JSON.stringify(user));
+  }, [user]);
 
   useEffect(() => {
-    console.log(healthKitData)
-  }, [healthKitData])
+    console.log(healthKitData);
+    requestUserPermission();
+    NotificationListener();
+  }, [healthKitData]);
+
 
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        {signedIn ?
-          <HealthkitDataContext.Provider value={{ healthKitData, getHealthKitData }} >
+        {signedIn ? (
+          <HealthkitDataContext.Provider
+            value={{healthKitData, getHealthKitData}}>
             <Dashboard user={user} setSignedIn={setSignedIn} />
           </HealthkitDataContext.Provider>
-          :
+        ) : (
           <Login user={user} setUser={setUser} setSignedIn={setSignedIn} />
-        }
+        )}
       </SafeAreaView>
     </>
   );
@@ -81,5 +93,4 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     textAlign: 'right',
   },
-}
-);
+});

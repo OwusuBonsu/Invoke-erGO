@@ -10,12 +10,17 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@react-native-firebase/app": "^14.9.3",
+    "@notifee/react-native": "^5.2.2",
+    "@react-native-async-storage/async-storage": "^1.17.5",
+    "@react-native-community/push-notification-ios": "^1.10.1",
+    "@react-native-firebase/app": "^14.9.4",
     "@react-native-firebase/auth": "^14.9.3",
     "@react-native-firebase/firestore": "^14.9.3",
+    "@react-native-firebase/messaging": "^14.9.4",
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "react-native-health": "https://github.com/OwusuBonsu/react-native-health-invoke.git"
+    "react-native-health": "https://github.com/OwusuBonsu/react-native-health-invoke.git",
+    "react-native-push-notification": "^8.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

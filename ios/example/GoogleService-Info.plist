@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>739349293266-rrvvrll3hqnku4roahrlpepkcmen1t0f.apps.googleusercontent.com</string>
+	<string>739349293266-tsg9o0dqjpsti38p6j4fak9ho8p2n44p.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.739349293266-rrvvrll3hqnku4roahrlpepkcmen1t0f</string>
+	<string>com.googleusercontent.apps.739349293266-tsg9o0dqjpsti38p6j4fak9ho8p2n44p</string>
 	<key>API_KEY</key>
 	<string>AIzaSyB113QjTlR8zxLpYISBrqWXcyCy5neeny8</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.invoke.ergo</string>
+	<string>org.Invoke.native.tracker.phone</string>
 	<key>PROJECT_ID</key>
 	<string>ergo-database</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:739349293266:ios:a80b6533319fa99e16e50b</string>
+	<string>1:739349293266:ios:9b1412f380ced84b16e50b</string>
 </dict>
 </plist>

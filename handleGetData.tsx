@@ -109,7 +109,9 @@ export default function handleGetData(getHealthKitData) {
     /* Can now read or write to HealthKit */
 
     let options = {
-      startDate: new Date().toISOString(), //change to todays date minus 7 days
+      startDate: new Date(2020,0,0).toISOString(), //change to todays date minus 7 days
+      endDate: new Date().toISOString(), //change to todays date minus 7 days
+    
     };
 
     //-----------Data Retrieval--------------// ask Owusu how we can condense this to 1 function for cleanliness
