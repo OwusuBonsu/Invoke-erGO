@@ -19,11 +19,15 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import handleGetData from './handleGetData';
 import { HealthkitDataContext } from './context/HealthkitDataContext';
+import Geolocation from '@react-native-community/geolocation';
+import Geocoder from 'react-native-geocoding';
 
 export default function Dashboard({ user, setSignedIn }) {
   const { getHealthKitData, healthKitData } = useContext(HealthkitDataContext);
   const [databaseData, getDatabaseData] = useState();
   const [userData, getUserData] = useState()
+  const [locationObject, getLocationObject] = useState({})
+
 
   // const handlePressGetAuthStatus = () => {
   //   AppleHealthKit.getAuthStatus(permissions, (err, result) => {
@@ -33,6 +37,8 @@ export default function Dashboard({ user, setSignedIn }) {
   //     setAuthStatus(result);
   //   });
   // };
+
+  Geocoder.init("AIzaSyDFNR_p1wDhI542Y1raBW1xSJt9MOop7zk");
 
   function signOut() {
     auth()
@@ -56,6 +62,15 @@ export default function Dashboard({ user, setSignedIn }) {
   useEffect(() => {
     console.log(databaseData)
   }, [databaseData])
+
+  const locationService = () => {
+    Geolocation.getCurrentPosition(info => getLocationObject(info))
+  }
+
+  useEffect(() => {
+    console.log(locationObject)
+    Geocoder.from(locationObject.coords.latitude, locationObject.coords.longitude).then(res => console.log(res.results[0].formatted_address))
+  }, [locationObject])
 
   return (
     <>
@@ -88,7 +103,7 @@ export default function Dashboard({ user, setSignedIn }) {
                   </View>)
                 }) : null}
               </View>
-
+              <Button title="Get location" onPress={() => locationService()} />
               <Button title="Sign Out" onPress={signOut} />
             </View>
           </View>
