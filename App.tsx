@@ -24,7 +24,7 @@ import { Platform } from 'react-native';
 export default function App() {
   const [user, setUser] = useState();
   const [signedIn, setSignedIn] = useState(false);
-  const [healthKitData, getHealthKitData] = useState([]);
+  const [healthKitData, getHealthKitData] = useState({});
 
   useEffect(() => {
     console.log('User: ' + JSON.stringify(user));

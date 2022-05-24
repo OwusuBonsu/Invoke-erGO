@@ -4,7 +4,7 @@ import AppleHealthKit, {
   HealthKitPermissions,
   HealthInputOptions,
 } from 'react-native-health';
-import { HealthkitDataContext } from './context/HealthkitDataContext';
+import { HealthkitDataContext } from '../../context/HealthkitDataContext';
 
 export default function handleGetData(getHealthKitData) {
 
@@ -12,12 +12,12 @@ export default function handleGetData(getHealthKitData) {
     permissions: {
       read: [
         // //Characteristics(done)
-        AppleHealthKit.Constants.Permissions.Height, //getLatestHeight
-        AppleHealthKit.Constants.Permissions.Weight, //getLatestWeight
-        AppleHealthKit.Constants.Permissions.BiologicalSex, //getBiologicalSex
+        // AppleHealthKit.Constants.Permissions.Height, //getLatestHeight
+        // AppleHealthKit.Constants.Permissions.Weight, //getLatestWeight
+        // AppleHealthKit.Constants.Permissions.BiologicalSex, //getBiologicalSex
         //AppleHealthKit.Constants.Permissions.BloodType, //getBloodType
         //AppleHealthKit.Constants.Permissions.WaistCircumference, //getLatestWaistCircumference
-        AppleHealthKit.Constants.Permissions.DateOfBirth,
+        // AppleHealthKit.Constants.Permissions.DateOfBirth,
         // Body Measurements (done)
         //AppleHealthKit.Constants.Permissions.BodyMass, //can we delete this for weight instead of this
         //AppleHealthKit.Constants.Permissions.BodyFatPercentage, //getLatestBodyFatPercentage
@@ -30,8 +30,8 @@ export default function handleGetData(getHealthKitData) {
         ///AppleHealthKit.Constants.Permissions.HeadphoneAudioExposureEvent, //invoke addition
 
         //Fitness (done)
-        AppleHealthKit.Constants.Permissions.Steps,
-        AppleHealthKit.Constants.Permissions.StepCount,
+        // AppleHealthKit.Constants.Permissions.Steps,
+        // AppleHealthKit.Constants.Permissions.StepCount,
         //AppleHealthKit.Constants.Permissions.DistanceWalkingRunning, //getDistanceWalkingRunning
         //AppleHealthKit.Constants.Permissions.DistanceSwimming, //(scrap for now and ask zafe)
         //AppleHealthKit.Constants.Permissions.DistanceCycling, //getDistanceCycling
@@ -45,7 +45,7 @@ export default function handleGetData(getHealthKitData) {
         //AppleHealthKit.Constants.Permissions.AppleStandTime, //getAppleStandTime
 
         //Vitals
-        AppleHealthKit.Constants.Permissions.HeartRate, //(should we use this or heatbeat samples or heart rate variability instead)
+        // AppleHealthKit.Constants.Permissions.HeartRate, //(should we use this or heatbeat samples or heart rate variability instead)
         //AppleHealthKit.Constants.Permissions.WalkingHeartRateAverage, //getWalkingHeartRateAverage
         //AppleHealthKit.Constants.Permissions.RestingHeartRate, //getRestingHeartRateSamples
         AppleHealthKit.Constants.Permissions.HeartRateVariability, //getHeartRateVariabilitySamples
@@ -109,60 +109,60 @@ export default function handleGetData(getHealthKitData) {
     /* Can now read or write to HealthKit */
 
     let options = {
-      startDate: new Date(2020,0,0).toISOString(), //change to todays date minus 7 days
+      startDate: new Date(2020, 0, 0).toISOString(), //change to todays date minus 7 days
       endDate: new Date().toISOString(), //change to todays date minus 7 days
-    
+
     };
 
     //-----------Data Retrieval--------------// ask Owusu how we can condense this to 1 function for cleanliness
     //Body Methods 1
-    AppleHealthKit.getLatestWeight(
-      //add in all of the functions to be able to get this data
-      options,
-      (err: Object, results: HealthValue) => {
-        if (err || results == null) {
-          return;
-        } else {
-          getHealthKitData(healthKitData => [...healthKitData, results])
-        }
-      },
-    );
+    // AppleHealthKit.getLatestWeight(
+    //   //add in all of the functions to be able to get this data
+    //   options,
+    //   (err: Object, results: HealthValue) => {
+    //     if (err || results == null) {
+    //       return;
+    //     } else {
+    //       getHealthKitData(healthKitData => [...healthKitData, results])
+    //     }
+    //   },
+    // );
 
-    AppleHealthKit.getLatestHeight(
-      //add in all of the functions to be able to get this data
-      options,
-      (err: Object, results: HealthValue) => {
-        if (err || results == null) {
-          return;
-        } else {
-          getHealthKitData(healthKitData => [...healthKitData, results])
-        }
-      },
-    );
+    // AppleHealthKit.getLatestHeight(
+    //   //add in all of the functions to be able to get this data
+    //   options,
+    //   (err: Object, results: HealthValue) => {
+    //     if (err || results == null) {
+    //       return;
+    //     } else {
+    //       getHealthKitData(healthKitData => [...healthKitData, results])
+    //     }
+    //   },
+    // );
 
-    //Characteristic 1
-    AppleHealthKit.getBiologicalSex(
-      //add in all of the functions to be able to get this data
-      options,
-      (err: Object, results: HealthValue) => {
-        if (err || results == null) {
-          return;
-        } else {
-          getHealthKitData(healthKitData => [...healthKitData, results])
-        }
-      },
-    );
-    AppleHealthKit.getDateOfBirth(
-      //add in all of the functions to be able to get this data
-      options,
-      (err: Object, results: HealthValue) => {
-        if (err || results == null) {
-          return;
-        } else {
-          getHealthKitData(healthKitData => [...healthKitData, results])
-        }
-      },
-    );
+    // //Characteristic 1
+    // AppleHealthKit.getBiologicalSex(
+    //   //add in all of the functions to be able to get this data
+    //   options,
+    //   (err: Object, results: HealthValue) => {
+    //     if (err || results == null) {
+    //       return;
+    //     } else {
+    //       getHealthKitData(healthKitData => [...healthKitData, results])
+    //     }
+    //   },
+    // );
+    // AppleHealthKit.getDateOfBirth(
+    //   //add in all of the functions to be able to get this data
+    //   options,
+    //   (err: Object, results: HealthValue) => {
+    //     if (err || results == null) {
+    //       return;
+    //     } else {
+    //       getHealthKitData(healthKitData => [...healthKitData, results])
+    //     }
+    //   },
+    // );
 
     //Fitness 1
     // AppleHealthKit.getDailyStepSamples(
@@ -390,7 +390,7 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData(healthKitData => [...healthKitData, results])
+          getHealthKitData(healthKitData => ({ ...healthKitData, HeartRateVariability: results[0].value }))
         }
       },
     );
@@ -405,17 +405,17 @@ export default function handleGetData(getHealthKitData) {
     //     }
     //   },
     // );
-    // AppleHealthKit.getVo2MaxSamples(
-    //   //add in all of the functions to be able to get this data
-    //   options,
-    //   (err: Object, results: HealthValue) => {
-    //     if (err || results == null) {
-    //       return;
-    //     } else {
-    //       getHealthKitData(healthKitData => [...healthKitData, results])
-    //     }
-    //   },
-    // );
+    AppleHealthKit.getVo2MaxSamples(
+      //add in all of the functions to be able to get this data
+      options,
+      (err: Object, results: HealthValue) => {
+        if (err || results == null) {
+          return;
+        } else {
+          getHealthKitData(healthKitData => ({ ...healthKitData, Vo2MaxSamples: results[0].value }))
+        }
+      },
+    );
     // AppleHealthKit.getOxygenSaturationSamples(
     //   //add in all of the functions to be able to get this data
     //   options,
@@ -513,7 +513,7 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData(healthKitData => [...healthKitData, results])
+          getHealthKitData(healthKitData => ({ ...healthKitData, WalkingSteadiness: results[0].value }))
         }
       },
     );
@@ -528,17 +528,17 @@ export default function handleGetData(getHealthKitData) {
     //     }
     //   },
     // );
-    // AppleHealthKit.getSixMinuteWalkTestDistance(
-    //   //add in all of the functions to be able to get this data
-    //   options,
-    //   (err: Object, results: HealthValue) => {
-    //     if (err || results == null) {
-    //       return;
-    //     } else {
-    //       getHealthKitData(healthKitData => [...healthKitData, results])
-    //     }
-    //   },
-    // );
+    AppleHealthKit.getSixMinuteWalkTestDistance(
+      //add in all of the functions to be able to get this data
+      options,
+      (err: Object, results: HealthValue) => {
+        if (err || results == null) {
+          return;
+        } else {
+          getHealthKitData(healthKitData => ({ ...healthKitData, SixMinuteWalkTestDistance: results[0].value }))
+        }
+      },
+    );
     // AppleHealthKit.getWalkingSpeed(
     //   //add in all of the functions to be able to get this data
     //   options,
@@ -561,28 +561,28 @@ export default function handleGetData(getHealthKitData) {
     //     }
     //   },
     // );
-    // AppleHealthKit.getWalkingAsymmetryPercentage(
-    //   //add in all of the functions to be able to get this data
-    //   options,
-    //   (err: Object, results: HealthValue) => {
-    //     if (err || results == null) {
-    //       return;
-    //     } else {
-    //       getHealthKitData(healthKitData => [...healthKitData, results])
-    //     }
-    //   },
-    // );
-    // AppleHealthKit.getWalkingDoubleSupportPercentage(
-    //   //add in all of the functions to be able to get this data
-    //   options,
-    //   (err: Object, results: HealthValue) => {
-    //     if (err || results == null) {
-    //       return;
-    //     } else {
-    //       getHealthKitData(healthKitData => [...healthKitData, results])
-    //     }
-    //   },
-    // );
+    AppleHealthKit.getWalkingAsymmetryPercentage(
+      //add in all of the functions to be able to get this data
+      options,
+      (err: Object, results: HealthValue) => {
+        if (err || results == null) {
+          return;
+        } else {
+          getHealthKitData(healthKitData => ({ ...healthKitData, WalkingAsymmetryPercentage: results[0].value }))
+        }
+      },
+    );
+    AppleHealthKit.getWalkingDoubleSupportPercentage(
+      //add in all of the functions to be able to get this data
+      options,
+      (err: Object, results: HealthValue) => {
+        if (err || results == null) {
+          return;
+        } else {
+          getHealthKitData(healthKitData => ({ ...healthKitData, WalkingDoubleSupportPercentage: results[0].value }))
+        }
+      },
+    );
     // AppleHealthKit.getStairAscentSpeed(
     //   //add in all of the functions to be able to get this data
     //   options,

@@ -6,27 +6,24 @@ import {
   View,
   Text,
   StatusBar,
-  ShadowPropTypesIOS,
+
   Button
 } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import AppleHealthKit, {
-  HealthValue,
-  HealthKitPermissions,
-  HealthInputOptions,
-} from 'react-native-health';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
-import handleGetData from './handleGetData';
+
+import handleGetData from './src/utils/handleGetData';
 import { HealthkitDataContext } from './context/HealthkitDataContext';
-import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
+import { setLocation } from './src/utils/LocationServices';
+import { signOut } from './src/utils/FirebaseUtils';
+import { SendToFirebase } from './src/utils/FirebaseUtils';
 
 export default function Dashboard({ user, setSignedIn }) {
   const { getHealthKitData, healthKitData } = useContext(HealthkitDataContext);
   const [databaseData, getDatabaseData] = useState();
   const [userData, getUserData] = useState()
-  const [locationObject, getLocationObject] = useState({})
+
 
 
   // const handlePressGetAuthStatus = () => {
@@ -40,20 +37,13 @@ export default function Dashboard({ user, setSignedIn }) {
 
   Geocoder.init("AIzaSyDFNR_p1wDhI542Y1raBW1xSJt9MOop7zk");
 
-  function signOut() {
-    auth()
-      .signOut()
-      .then(() => setSignedIn(false))
-  }
-
-
   const getDatabase = async () => {
     var dataCollection = await firestore().collection('Playground').doc('Test').get();
   }
 
   useEffect(() => {
-    console.log("Data state: " + userData)
-  }, [userData])
+    console.log("Data state: " + JSON.stringify(healthKitData))
+  }, [healthKitData])
 
   // useEffect(() => {
   //   getDatabase();
@@ -63,14 +53,7 @@ export default function Dashboard({ user, setSignedIn }) {
     console.log(databaseData)
   }, [databaseData])
 
-  const locationService = () => {
-    Geolocation.getCurrentPosition(info => getLocationObject(info))
-  }
 
-  useEffect(() => {
-    console.log(locationObject)
-    Geocoder.from(locationObject.coords.latitude, locationObject.coords.longitude).then(res => console.log(res.results[0].formatted_address))
-  }, [locationObject])
 
   return (
     <>
@@ -84,12 +67,11 @@ export default function Dashboard({ user, setSignedIn }) {
               <Text style={styles.sectionTitle}>
                 Dashboard
               </Text>
-              <Text onPress={() => {
-                getHealthKitData([]);
-                handleGetData(getHealthKitData)
-              }}>
-                Retrieve new health data
-              </Text>
+              <Button title="Retrieve health data and send to firebase" onPress={() =>
+                SendToFirebase(getHealthKitData, healthKitData)
+              }>
+                Retrieve health data and send to firebase
+              </Button>
 
               {/* <Text onPress={sendToFirebase}>
                 Send data to database
@@ -103,7 +85,7 @@ export default function Dashboard({ user, setSignedIn }) {
                   </View>)
                 }) : null}
               </View>
-              <Button title="Get location" onPress={() => locationService()} />
+              <Button title="Get location" onPress={() => setLocation()} />
               <Button title="Sign Out" onPress={signOut} />
             </View>
           </View>
@@ -152,3 +134,5 @@ const styles = StyleSheet.create({
   },
 }
 );
+
+
