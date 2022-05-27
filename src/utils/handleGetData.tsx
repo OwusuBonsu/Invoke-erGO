@@ -17,7 +17,7 @@ export default function handleGetData(getHealthKitData) {
         AppleHealthKit.Constants.Permissions.BiologicalSex, //getBiologicalSex
         //AppleHealthKit.Constants.Permissions.BloodType, //getBloodType
         //AppleHealthKit.Constants.Permissions.WaistCircumference, //getLatestWaistCircumference
-        // AppleHealthKit.Constants.Permissions.DateOfBirth,
+         AppleHealthKit.Constants.Permissions.DateOfBirth,
         // Body Measurements (done)
         //AppleHealthKit.Constants.Permissions.BodyMass, //can we delete this for weight instead of this
         //AppleHealthKit.Constants.Permissions.BodyFatPercentage, //getLatestBodyFatPercentage
@@ -148,7 +148,7 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData(healthKitData => [...healthKitData, results[1].value])
+          getHealthKitData(healthKitData => [...healthKitData, results])
         }
       },
     );

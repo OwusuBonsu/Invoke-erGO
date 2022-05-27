@@ -2,13 +2,15 @@ import auth from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/messaging';
 import {Text, TextInput, Button, SafeAreaView, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
+import { getFcmToken } from './src/utils/LocationServices';
 
 export default function Login({user, setUser, setSignedIn}) {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [fcmToken, setFcmToken] = useState('');
+  
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
@@ -61,12 +63,14 @@ export default function Login({user, setUser, setSignedIn}) {
 
   
 
-  const getToken = async () => {
+   const getToken = async () => {
     const authStatus = await firebase.messaging().requestPermission();
     if (authStatus === 1) {
       let fcmToken = await firebase.messaging().getToken();
       if (fcmToken) {
         console.log('Firebase Push Token is:', fcmToken);
+        setFcmToken(fcmToken);
+        
       }
     }
   };
