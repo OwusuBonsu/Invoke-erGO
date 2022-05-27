@@ -12,7 +12,7 @@ export function getLocation(locObject, getHealthKitData) {
     (res) =>
       getHealthKitData((healthKitData) => ({
         ...healthKitData,
-        Address: res.results[0].formatted_address,
+        Address: res.results[6].formatted_address,
         Longitude: res.results[0].geometry.location.lng,
         Latitude: res.results[0].geometry.location.lat,
       })),

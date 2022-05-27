@@ -14,7 +14,7 @@ export default function handleGetData(getHealthKitData) {
         // //Characteristics(done)
         // AppleHealthKit.Constants.Permissions.Height, //getLatestHeight
         // AppleHealthKit.Constants.Permissions.Weight, //getLatestWeight
-        // AppleHealthKit.Constants.Permissions.BiologicalSex, //getBiologicalSex
+        AppleHealthKit.Constants.Permissions.BiologicalSex, //getBiologicalSex
         //AppleHealthKit.Constants.Permissions.BloodType, //getBloodType
         //AppleHealthKit.Constants.Permissions.WaistCircumference, //getLatestWaistCircumference
         // AppleHealthKit.Constants.Permissions.DateOfBirth,
@@ -109,8 +109,8 @@ export default function handleGetData(getHealthKitData) {
     /* Can now read or write to HealthKit */
 
     let options = {
-      startDate: new Date(2020, 0, 0).toISOString(), //change to todays date minus 7 days
-      endDate: new Date().toISOString(), //change to todays date minus 7 days
+      startDate: new Date(2018, 0, 0).toISOString(), //change to todays date minus 7 days
+      endDate: new Date().toISOString(), //change to todays date minus 7 day
 
     };
 
@@ -141,17 +141,17 @@ export default function handleGetData(getHealthKitData) {
     // );
 
     // //Characteristic 1
-    // AppleHealthKit.getBiologicalSex(
-    //   //add in all of the functions to be able to get this data
-    //   options,
-    //   (err: Object, results: HealthValue) => {
-    //     if (err || results == null) {
-    //       return;
-    //     } else {
-    //       getHealthKitData(healthKitData => [...healthKitData, results])
-    //     }
-    //   },
-    // );
+    AppleHealthKit.getBiologicalSex(
+      //add in all of the functions to be able to get this data
+      options,
+      (err: Object, results: HealthValue) => {
+        if (err || results == null) {
+          return;
+        } else {
+          getHealthKitData(healthKitData => [...healthKitData, results[1].value])
+        }
+      },
+    );
     // AppleHealthKit.getDateOfBirth(
     //   //add in all of the functions to be able to get this data
     //   options,
@@ -390,7 +390,7 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData(healthKitData => ({ ...healthKitData, HeartRateVariability: results[0].value }))
+          getHealthKitData(healthKitData => ({ ...healthKitData, HeartRateVariability: results[0].value }));
         }
       },
     );
@@ -405,17 +405,17 @@ export default function handleGetData(getHealthKitData) {
     //     }
     //   },
     // );
-    AppleHealthKit.getVo2MaxSamples(
-      //add in all of the functions to be able to get this data
-      options,
-      (err: Object, results: HealthValue) => {
-        if (err || results == null) {
-          return;
-        } else {
-          getHealthKitData(healthKitData => ({ ...healthKitData, Vo2MaxSamples: results[0].value }))
-        }
-      },
-    );
+    // AppleHealthKit.getVo2MaxSamples(
+    //   //add in all of the functions to be able to get this data
+    //   options,
+    //   (err: Object, results: HealthValue) => {
+    //     if (err || results == null) {
+    //       return;
+    //     } else {
+    //       getHealthKitData(healthKitData => ({ ...healthKitData, Vo2MaxSamples: results[0].value }));
+    //     }
+    //   },
+    // );
     // AppleHealthKit.getOxygenSaturationSamples(
     //   //add in all of the functions to be able to get this data
     //   options,
@@ -513,7 +513,7 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData(healthKitData => ({ ...healthKitData, WalkingSteadiness: results[0].value }))
+          getHealthKitData(healthKitData => ({ ...healthKitData, WalkingSteadiness: results[0].value}));
         }
       },
     );
@@ -535,7 +535,7 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData(healthKitData => ({ ...healthKitData, SixMinuteWalkTestDistance: results[0].value }))
+          getHealthKitData(healthKitData => ({ ...healthKitData, SixMinuteWalkTestDistance: results[0].value }));
         }
       },
     );
@@ -568,7 +568,7 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData(healthKitData => ({ ...healthKitData, WalkingAsymmetryPercentage: results[0].value }))
+          getHealthKitData(healthKitData => ({ ...healthKitData, WalkingAsymmetryPercentage: results[0].value }));
         }
       },
     );
@@ -579,7 +579,7 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData(healthKitData => ({ ...healthKitData, WalkingDoubleSupportPercentage: results[0].value }))
+          getHealthKitData(healthKitData => ({ ...healthKitData, WalkingDoubleSupportPercentage: results[0].value }));
         }
       },
     );
