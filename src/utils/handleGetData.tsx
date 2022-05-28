@@ -50,11 +50,11 @@ export default function handleGetData(getHealthKitData) {
         //AppleHealthKit.Constants.Permissions.RestingHeartRate, //getRestingHeartRateSamples
         AppleHealthKit.Constants.Permissions.HeartRateVariability, //getHeartRateVariabilitySamples
         //AppleHealthKit.Constants.Permissions.HeartbeatSeries, //(ask zafe before doing this)
-        AppleHealthKit.Constants.Permissions.Vo2Max, //getVo2MaxSamples
+        //AppleHealthKit.Constants.Permissions.Vo2Max, //getVo2MaxSamples
         //AppleHealthKit.Constants.Permissions.BodyTemperature, //(ask zafe about user input data)
         //AppleHealthKit.Constants.Permissions.BloodPressureDiastolic, //gonna scrap because we need to snag correlated
         //AppleHealthKit.Constants.Permissions.BloodPressureSystolic, //correlate both
-        AppleHealthKit.Constants.Permissions.RespiratoryRate, //getRespiratoryRateSamples
+       // AppleHealthKit.Constants.Permissions.RespiratoryRate, //getRespiratoryRateSamples
         //AppleHealthKit.Constants.Permissions.OxygenSaturation, //getOxygenSaturationSamples
         //AppleHealthKit.Constants.Permissions.Electrocardiogram, //getElectrocardiogramSamples
         // sleep & Mindfulness
@@ -86,7 +86,7 @@ export default function handleGetData(getHealthKitData) {
         //AppleHealthKit.Constants.Permissions.IrregularHeartRateEvent, //.t
         AppleHealthKit.Constants.Permissions.AppleWalkingSteadiness, //(Working)
         //AppleHealthKit.Constants.Permissions.AppleWalkingSteadinessEvent, //.t
-        AppleHealthKit.Constants.Permissions.SixMinuteWalkTestDistance, //.t
+        //AppleHealthKit.Constants.Permissions.SixMinuteWalkTestDistance, //.t
         //AppleHealthKit.Constants.Permissions.WalkingSpeed, //.t
         //AppleHealthKit.Constants.Permissions.WalkingStepLength, //.t
         AppleHealthKit.Constants.Permissions.WalkingAsymmetryPercentage, //.t
@@ -493,6 +493,7 @@ export default function handleGetData(getHealthKitData) {
     //     }
     //   },
     // );
+    //
     // AppleHealthKit.getIrregularHeartRateEvent(
     //   //add in all of the functions to be able to get this data
     //   options,
@@ -528,17 +529,17 @@ export default function handleGetData(getHealthKitData) {
     //     }
     //   },
     // );
-    AppleHealthKit.getSixMinuteWalkTestDistance(
-      //add in all of the functions to be able to get this data
-      options,
-      (err: Object, results: HealthValue) => {
-        if (err || results == null) {
-          return;
-        } else {
-          getHealthKitData(healthKitData => ({ ...healthKitData, SixMinuteWalkTestDistance: results[0].value }));
-        }
-      },
-    );
+    // AppleHealthKit.getSixMinuteWalkTestDistance(
+    //   //add in all of the functions to be able to get this data
+    //   options,
+    //   (err: Object, results: HealthValue) => {
+    //     if (err || results == null) {
+    //       return;
+    //     } else {
+    //       getHealthKitData(healthKitData => ({ ...healthKitData, SixMinuteWalkTestDistance: results[0].value }));
+    //     }
+    //   },
+    // );
     // AppleHealthKit.getWalkingSpeed(
     //   //add in all of the functions to be able to get this data
     //   options,
