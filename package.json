@@ -25,7 +25,8 @@
     "react-native-device-info": "^8.7.1",
     "react-native-geocoding": "^0.5.0",
     "react-native-health": "https://github.com/OwusuBonsu/react-native-health-invoke.git",
-    "react-native-push-notification": "^8.1.1"
+    "react-native-push-notification": "^8.1.1",
+    "react-native-uuid": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

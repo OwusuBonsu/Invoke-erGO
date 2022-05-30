@@ -2,7 +2,7 @@ import auth from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/messaging';
 import {Text, TextInput, Button, SafeAreaView, View, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {SendInjuryWitness} from './src/utils/FirebaseUtils';
+import {getToken} from './src/utils/FirebaseUtils';
 
 export default function Login({user, setUser, setSignedIn}) {
   // Set an initializing state whilst Firebase connects

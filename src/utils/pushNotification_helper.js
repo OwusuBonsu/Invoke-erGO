@@ -10,7 +10,7 @@ class NotificationManager {
         console.log('TOKEN:', token);
       },
       onNotification: function (notification: any) {
-        console.log('NOTIFICATION:', notification);
+        console.log('NOTIFICATION:', notification.data.injuryID);
         Alert.alert('Injury Reported', 'Are you a witness?', [
           {
             text: 'No',
