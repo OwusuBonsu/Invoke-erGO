@@ -1,13 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
-
-export const getFcmToken = (token) => {
- 
- return token;
-};
-
-
+import {getToken} from './FirebaseUtils';
 
 export const setLocation = (getHealthKitData) => {
   Geolocation.getCurrentPosition((info) => getLocation(info, getHealthKitData));
@@ -16,9 +10,7 @@ export const setLocation = (getHealthKitData) => {
 export function getLocation(locObject, getHealthKitData) {
   console.log(locObject);
   Geocoder.from(locObject.coords.latitude, locObject.coords.longitude).then(
-    (res) =>
-    {
-      console.log('tokennn', getFcmToken);
+    (res) => {
       getHealthKitData((healthKitData) => ({
         ...healthKitData,
         Address: res.results[0].formatted_address,
@@ -28,12 +20,9 @@ export function getLocation(locObject, getHealthKitData) {
         state: res.results[7].address_components[0].long_name,
         country: res.results[8].address_components[0].long_name,
         date: new Date().toISOString(),
-        FcmToken: getFcmToken(),
-
-        
-      }))}
-      
+        fcmToken: getToken(),
+      }));
+    },
+    console.log('LocToken:', getToken()),
   );
- 
 }
-

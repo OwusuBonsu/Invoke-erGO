@@ -26,11 +26,10 @@ export default function App() {
   const [signedIn, setSignedIn] = useState(false);
   const [healthKitData, getHealthKitData] = useState({});
 
+  firebase.app();
   useEffect(() => {
     console.log('User: ' + JSON.stringify(user));
   }, [user]);
-
-
 
   return (
     <>

@@ -1,20 +1,21 @@
 import auth from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/messaging';
-import {Text, TextInput, Button, SafeAreaView, View} from 'react-native';
+import {Text, TextInput, Button, SafeAreaView, View, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import { getFcmToken } from './src/utils/LocationServices';
+import {SendInjuryWitness} from './src/utils/FirebaseUtils';
 
 export default function Login({user, setUser, setSignedIn}) {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fcmToken, setFcmToken] = useState('');
-  
+  //const [fcmToken, setFcmToken] = useState('');
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
-    if (initializing) setInitializing(false);
+    if (initializing) {
+      setInitializing(false);
+    }
   }
 
   useEffect(() => {
@@ -51,30 +52,20 @@ export default function Login({user, setUser, setSignedIn}) {
       })
       .catch((err) => console.log(err));
   }
+
   firebase
     .messaging()
     .subscribeToTopic('injuryLog')
     .then(() => console.log('Subscribed to injuryLog'));
 
-    firebase
+  firebase
     .messaging()
     .subscribeToTopic('AlgorithmData')
     .then(() => console.log('Subscribed to AlgorithmData!'));
 
-  
-
-   const getToken = async () => {
-    const authStatus = await firebase.messaging().requestPermission();
-    if (authStatus === 1) {
-      let fcmToken = await firebase.messaging().getToken();
-      if (fcmToken) {
-        console.log('Firebase Push Token is:', fcmToken);
-        setFcmToken(fcmToken);
-        
-      }
-    }
-  };
-  if (initializing) return null;
+  if (initializing) {
+    return null;
+  }
 
   return (
     <>
@@ -98,7 +89,11 @@ export default function Login({user, setUser, setSignedIn}) {
             title="Sign Up"
             onPress={() => signUpFunction(email, password)}
           />
-          <Button title="Get token" onPress={() => getToken()} />
+          <Button
+            title="Get token"
+            onPress={() => console.log('FireToke is:', getToken())}
+          />
+          
         </View>
       </SafeAreaView>
     </>

@@ -1,7 +1,8 @@
+import {Alert} from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
-
+import {SendInjuryWitness} from './src/utils/FirebaseUtils';
 class NotificationManager {
   configure = () => {
     PushNotification.configure({
@@ -10,6 +11,20 @@ class NotificationManager {
       },
       onNotification: function (notification: any) {
         console.log('NOTIFICATION:', notification);
+        Alert.alert('Injury Reported', 'Are you a witness?', [
+          {
+            text: 'No',
+            onPress: () => console.log('No Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'Yes',
+            onPress: () => {
+              console.log('Yes Pressed');
+              SendInjuryWitness();
+            },
+          },
+        ]);
         notification.finish(PushNotificationIOS.FetchResult.NoData);
       },
       permissions: {
