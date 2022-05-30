@@ -12,6 +12,7 @@ import DeviceInfo from 'react-native-device-info';
 export function SendToFirebase(getHealthKitData, healthKitData) {
   getHealthKitData([]);
   handleGetData(getHealthKitData);
+  setLocation(getHealthKitData);
   firestore().collection('AlgorithmDataTest').add(healthKitData);
 }
 
@@ -42,12 +43,11 @@ export const getToken = async () => {
   }
 };
 
-export function SendInjuryWitness() {
+export function SendInjuryWitness(email) {
   var injuryReport = {
     device_Id: DeviceInfo.getUniqueId(),
-    phoneNumber: DeviceInfo.getPhoneNumber(),
+    //phoneNumber: DeviceInfo.getPhoneNumber(),
     Time: new Date().toISOString(),
   };
-  setLocation();
   firestore().collection('injuryLogTest').add(injuryReport);
 }

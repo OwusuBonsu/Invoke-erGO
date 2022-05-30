@@ -21,13 +21,12 @@ export function getLocation(locObject, getHealthKitData) {
         county: res.results[6].address_components[0].short_name,
         state: res.results[7].address_components[0].long_name,
         country: res.results[8].address_components[0].long_name,
-        date: new Date().toISOString(),
         injuryID: uuid.v4(),
         device_Id: DeviceInfo.getUniqueId(),
-        phoneNumber: DeviceInfo.getPhoneNumber(),
+        //phoneNumber: DeviceInfo.getPhoneNumber(),
         Time: new Date().toISOString(),
       }));
     },
-    console.log('LocToken:', getToken()),
+   
   );
 }
