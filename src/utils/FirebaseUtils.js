@@ -14,9 +14,12 @@ export function onResult(QuerySnapshot) {
   QuerySnapshot.forEach((documentSnapshot) => {
     console.log('injuryLog ', documentSnapshot.id, documentSnapshot.data());
     // Create a new field path
-    const fieldPath = new firebase.firestore.FieldPath('injuryID');
-    var injuryID = documentSnapshot.get(fieldPath);
-
+    const fieldPath_injuryID = new firebase.firestore.FieldPath('injuryID');
+    const fieldPath_Latitude = new firebase.firestore.FieldPath('Latitude');
+    const fieldPath_Longitude = new firebase.firestore.FieldPath('Longitude');
+    var injuryID = documentSnapshot.get(fieldPath_injuryID);
+    var injuryLat = documentSnapshot.get(fieldPath_Latitude); //use for mapview
+    var injuryLong = documentSnapshot.get(fieldPath_Longitude);
     console.log('injuryID ', injuryID);
 
     console.log('Got Users collection result.');
@@ -82,7 +85,6 @@ export const getToken = async () => {
 };
 
 export function SendInjuryWitness(injuryID) {
-
   var injuryReport = {
     injuryID: injuryID,
     device_Id: DeviceInfo.getUniqueId(),
@@ -99,5 +101,8 @@ export function SendInjuryWitness(injuryID) {
 export function SendInjuryLog(getinjuryData, injuryData) {
   getinjuryData([]);
   setLocation(getinjuryData);
-  firestore().collection('injuryLogTest').add(injuryData);
+  console.log('injuryID send', injuryData.injuryID);
+  var injuryID = injuryData.injuryID;
+  var realID = injuryID.toString();
+  firestore().collection('injuryLogTest').doc(realID).set(injuryData);
 }

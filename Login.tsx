@@ -2,6 +2,7 @@ import auth from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/messaging';
 import {Text, TextInput, Button, SafeAreaView, View, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
+import MapView from 'react-native-maps';
 import {getToken} from './src/utils/FirebaseUtils';
 export default function Login({user, setUser, setSignedIn}) {
   // Set an initializing state whilst Firebase connects
@@ -70,15 +71,26 @@ export default function Login({user, setUser, setSignedIn}) {
 
   return (
     <>
+    <MapView
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
       <SafeAreaView>
+      
         <View>
           <TextInput
             placeholder="email"
+            placeholderTextColor = "#9a73ef"
             value={email}
             onChangeText={(emailText) => setEmail(emailText)}
           />
           <TextInput
             placeholder="password"
+            placeholderTextColor = "#9a73ef"
             value={password}
             onChangeText={(passText) => setPassword(passText)}
           />

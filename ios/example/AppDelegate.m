@@ -35,6 +35,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  //[GPSServices provideAPIkey: "AIzaSyDFNR_p1wDhI542Y1raBW1xSJt9MOop7zk"]
     if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
       
