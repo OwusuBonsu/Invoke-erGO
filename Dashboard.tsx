@@ -8,23 +8,30 @@ import {
   StatusBar,
   Button,
   Alert,
+  TextInput,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import firestore from '@react-native-firebase/firestore';
-import analytics from '@react-native-firebase/analytics';
-import {firebase} from '@react-native-firebase/analytics';
-import handleGetData from './src/utils/handleGetData';
 import {HealthkitDataContext} from './context/HealthkitDataContext';
+//import MapView from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import {setLocation} from './src/utils/LocationServices';
-import {signOut} from './src/utils/FirebaseUtils';
-import {SendToFirebase, SendInjuryWitness} from './src/utils/FirebaseUtils';
-import {getToken} from './src/utils/FirebaseUtils';
+import {
+  signOut,
+  SendInjuryLog,
+  SendInjuryWitness,
+  SendHealthData,
+} from './src/utils/FirebaseUtils';
 
 export default function Dashboard({user, setSignedIn}) {
-  const {getHealthKitData, healthKitData} = useContext(HealthkitDataContext);
-  const [databaseData, getDatabaseData] = useState();
-  const [userData, getUserData] = useState();
+  const {healthKitData, getHealthKitData} = useContext(HealthkitDataContext);
+  const [databaseData, getDatabaseData] = useState('');
+  const [injuryData, getinjuryData] = useState({}); //injuryLog Data
+  const [anecdote, setAnecdote] = useState('');
+  const [bodyPart, setBodyPart] = useState('');
+  const [observers, setObservers] = useState('');
+  const [language, setLanguage] = useState('');
+  const [userName, setuserName] = useState('');
+  const [english_question, setEnglish_question] = useState('');
 
   // const handlePressGetAuthStatus = () => {
   //   AppleHealthKit.getAuthStatus(permissions, (err, result) => {
@@ -37,24 +44,15 @@ export default function Dashboard({user, setSignedIn}) {
 
   Geocoder.init('AIzaSyDFNR_p1wDhI542Y1raBW1xSJt9MOop7zk');
 
-  const getDatabase = async () => {
-    var dataCollection = await firestore()
-      .collection('Playground')
-      .doc('Test')
-      .get();
-  };
-
-  useEffect(() => {
-    console.log('Data state: ' + JSON.stringify(healthKitData));
-  }, [healthKitData]);
-
   // useEffect(() => {
-  //   getDatabase();
-  //   },[])
+  //   //console.log('Data state: ' + JSON.stringify(healthKitData));
+  // }, [healthKitData]);
 
   useEffect(() => {
     console.log(databaseData);
   }, [databaseData]);
+
+  
 
   return (
     <>
@@ -66,8 +64,8 @@ export default function Dashboard({user, setSignedIn}) {
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Dashboard</Text>
-              <Button
-                title="Generate Injury Alert"
+              {/* <Button
+                title="Generate Injury Witness Notification"
                 onPress={() => {
                   Alert.alert('Injury Reported', 'Are you a witness?', [
                     {
@@ -79,23 +77,108 @@ export default function Dashboard({user, setSignedIn}) {
                       text: 'Yes',
                       onPress: () => {
                         console.log('Yes Pressed');
-                        SendInjuryWitness();
+                        SendInjuryWitness(userName);
                       },
                     },
                   ]);
                 }}
-              />
+              /> */}
               <Button
                 title="Retrieve health data and send to firebase"
                 onPress={() => {
-                  SendToFirebase(getHealthKitData, healthKitData);
+                  SendHealthData(getHealthKitData, healthKitData);
                 }}
               />
-
-              {/* <Text onPress={sendToFirebase}>
-                Send data to database
-              </Text> */}
-
+              <Button
+                title="Report Injury"
+                onPress={() => {
+                  SendInjuryLog(getinjuryData, injuryData);
+                }}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Do you speak English?"
+                value={english_question}
+                onChangeText={(text) => {
+                  setEnglish_question(text);
+                  {
+                    getinjuryData(() => ({
+                      ...injuryData,
+                      English: english_question,
+                    }));
+                  }
+                }}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Name"
+                value={userName}
+                onChangeText={(userName) => {
+                  setuserName(userName);
+                  {
+                    getinjuryData(() => ({
+                      ...injuryData,
+                      Name: userName,
+                    }));
+                  }
+                }}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="What Language you speak?"
+                value={language}
+                onChangeText={(languageText) => {
+                  setLanguage(languageText);
+                  {
+                    getinjuryData(() => ({
+                      ...injuryData,
+                      Language: language,
+                    }));
+                  }
+                }}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Anecdote"
+                value={anecdote}
+                onChangeText={(ancedcoteText) => {
+                  setAnecdote(ancedcoteText);
+                  {
+                    getinjuryData(() => ({
+                      ...injuryData,
+                      Anecdote: anecdote,
+                    }));
+                  }
+                }}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Body Part Injured?"
+                value={bodyPart}
+                onChangeText={(bodyText) => {
+                  setBodyPart(bodyText);
+                  {
+                    getinjuryData(() => ({
+                      ...injuryData,
+                      BodyPart: bodyPart,
+                    }));
+                  }
+                }}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Please List Witnessess"
+                value={observers}
+                onChangeText={(observeText) => {
+                  setObservers(observeText);
+                  {
+                    getinjuryData(() => ({
+                      ...injuryData,
+                      Observers: observers,
+                    }));
+                  }
+                }}
+              />
               <View
                 style={{
                   width: '100%',
@@ -130,6 +213,14 @@ export default function Dashboard({user, setSignedIn}) {
               </View>
               <Button title="Get location" onPress={() => setLocation()} />
               <Button title="Sign Out" onPress={signOut} />
+              {/* <MapView
+                initialRegion={{
+                  latitude: 37.78825,
+                  longitude: -122.4324,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}
+              /> */}
             </View>
           </View>
         </ScrollView>
@@ -146,6 +237,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
+  textInput: {
+    color: 'green',
+    fontSize: 20,
+  },
+
   body: {
     backgroundColor: Colors.white,
   },

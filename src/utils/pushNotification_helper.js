@@ -11,20 +11,20 @@ class NotificationManager {
       },
       onNotification: function (notification: any) {
         console.log('NOTIFICATION:', notification.data.injuryID);
-        Alert.alert('Injury Reported', 'Are you a witness?', [
-          {
-            text: 'No',
-            onPress: () => console.log('No Pressed'),
-            style: 'cancel',
-          },
-          {
-            text: 'Yes',
-            onPress: () => {
-              console.log('Yes Pressed');
-              SendInjuryWitness();
-            },
-          },
-        ]);
+        // Alert.alert('Injury Reported', 'Are you a witness?', [
+        //   {
+        //     text: 'No',
+        //     onPress: () => console.log('No Pressed'),
+        //     style: 'cancel',
+        //   },
+        //   {
+        //     text: 'Yes',
+        //     onPress: () => {
+        //       console.log('Yes Pressed');
+        //       SendInjuryWitness();
+        //     },
+        //   },
+        // ]);
         notification.finish(PushNotificationIOS.FetchResult.NoData);
       },
       permissions: {

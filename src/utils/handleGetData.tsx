@@ -16,7 +16,7 @@ export default function handleGetData(getHealthKitData) {
         AppleHealthKit.Constants.Permissions.BiologicalSex, //getBiologicalSex
         //AppleHealthKit.Constants.Permissions.BloodType, //getBloodType
         //AppleHealthKit.Constants.Permissions.WaistCircumference, //getLatestWaistCircumference
-        AppleHealthKit.Constants.Permissions.DateOfBirth,
+         AppleHealthKit.Constants.Permissions.DateOfBirth,
         // Body Measurements (done)
         //AppleHealthKit.Constants.Permissions.BodyMass, //can we delete this for weight instead of this
         //AppleHealthKit.Constants.Permissions.BodyFatPercentage, //getLatestBodyFatPercentage
@@ -53,7 +53,7 @@ export default function handleGetData(getHealthKitData) {
         //AppleHealthKit.Constants.Permissions.BodyTemperature, //(ask zafe about user input data)
         //AppleHealthKit.Constants.Permissions.BloodPressureDiastolic, //gonna scrap because we need to snag correlated
         //AppleHealthKit.Constants.Permissions.BloodPressureSystolic, //correlate both
-        // AppleHealthKit.Constants.Permissions.RespiratoryRate, //getRespiratoryRateSamples
+        AppleHealthKit.Constants.Permissions.RespiratoryRate, //getRespiratoryRateSamples
         //AppleHealthKit.Constants.Permissions.OxygenSaturation, //getOxygenSaturationSamples
         //AppleHealthKit.Constants.Permissions.Electrocardiogram, //getElectrocardiogramSamples
         // sleep & Mindfulness
@@ -108,7 +108,7 @@ export default function handleGetData(getHealthKitData) {
     /* Can now read or write to HealthKit */
 
     let options = {
-      startDate: new Date(2018, 0, 0).toISOString(), //change to todays date minus 7 days
+      startDate: new Date(2016, 0, 0).toISOString(), //change to todays date minus 7 days
       endDate: new Date().toISOString(), //change to todays date minus 7 day
     };
 
@@ -146,21 +146,24 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData((healthKitData) => [...healthKitData, results]);
+          getHealthKitData((healthKitData) => [
+            ...healthKitData,
+            results.value,
+          ]);
         }
       },
     );
-    // AppleHealthKit.getDateOfBirth(
-    //   //add in all of the functions to be able to get this data
-    //   options,
-    //   (err: Object, results: HealthValue) => {
-    //     if (err || results == null) {
-    //       return;
-    //     } else {
-    //       getHealthKitData(healthKitData => [...healthKitData, results])
-    //     }
-    //   },
-    // );
+    AppleHealthKit.getDateOfBirth(
+      //add in all of the functions to be able to get this data
+      options,
+      (err: Object, results: HealthValue) => {
+        if (err || results == null) {
+          return;
+        } else {
+          getHealthKitData(healthKitData => [...healthKitData, results])
+        }
+      },
+    );
 
     //Fitness 1
     // AppleHealthKit.getDailyStepSamples(
@@ -494,7 +497,6 @@ export default function handleGetData(getHealthKitData) {
     //     }
     //   },
     // );
-    //
     // AppleHealthKit.getIrregularHeartRateEvent(
     //   //add in all of the functions to be able to get this data
     //   options,

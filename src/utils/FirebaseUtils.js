@@ -1,5 +1,6 @@
-import {useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import auth from '@react-native-firebase/auth';
+import {Alert} from 'react-native';
 import handleGetData from './handleGetData';
 import {HealthkitDataContext} from '../../context/HealthkitDataContext';
 import {setLocation} from './LocationServices';
@@ -9,10 +10,47 @@ import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import analytics from '@react-native-firebase/analytics';
 import DeviceInfo from 'react-native-device-info';
 
-export function SendToFirebase(getHealthKitData, healthKitData) {
+export function onResult(QuerySnapshot) {
+  QuerySnapshot.forEach((documentSnapshot) => {
+    console.log('injuryLog ', documentSnapshot.id, documentSnapshot.data());
+    // Create a new field path
+    const fieldPath = new firebase.firestore.FieldPath('injuryID');
+    var injuryID = documentSnapshot.get(fieldPath);
+
+    console.log('injuryID ', injuryID);
+
+    console.log('Got Users collection result.');
+    Alert.alert('Injury Reported', 'Are you a witness?', [
+      {
+        text: 'No',
+        onPress: () => console.log('No Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => {
+          console.log('Yes Pressed');
+          SendInjuryWitness(injuryID);
+        },
+      },
+    ]);
+
+    function onError(error) {
+      console.error(error);
+    }
+  });
+}
+
+firestore()
+  .collection('injuryLogTest')
+  .orderBy('Time', 'desc')
+  .limit(1)
+  .onSnapshot(onResult); // listener for new injuries
+
+export function SendHealthData(getHealthKitData, healthKitData) {
   getHealthKitData([]);
   handleGetData(getHealthKitData);
-  setLocation(getHealthKitData);
+  //console.log(getHealthKitData);
   firestore().collection('AlgorithmDataTest').add(healthKitData);
 }
 
@@ -43,11 +81,23 @@ export const getToken = async () => {
   }
 };
 
-export function SendInjuryWitness(email) {
+export function SendInjuryWitness(injuryID) {
+
   var injuryReport = {
+    injuryID: injuryID,
     device_Id: DeviceInfo.getUniqueId(),
     //phoneNumber: DeviceInfo.getPhoneNumber(),
     Time: new Date().toISOString(),
   };
-  firestore().collection('injuryLogTest').add(injuryReport);
+  console.log('InjuryID:', injuryID);
+  firestore()
+    .collection('witnessLogTest')
+    .doc(injuryReport.Time)
+    .set(injuryReport);
+}
+
+export function SendInjuryLog(getinjuryData, injuryData) {
+  getinjuryData([]);
+  setLocation(getinjuryData);
+  firestore().collection('injuryLogTest').add(injuryData);
 }

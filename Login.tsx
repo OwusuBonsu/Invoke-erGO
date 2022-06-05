@@ -3,15 +3,15 @@ import {firebase} from '@react-native-firebase/messaging';
 import {Text, TextInput, Button, SafeAreaView, View, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {getToken} from './src/utils/FirebaseUtils';
-
 export default function Login({user, setUser, setSignedIn}) {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [userName, setuserName] = useState('');
   //const [fcmToken, setFcmToken] = useState('');
   // Handle user state changes
-  function onAuthStateChanged(user) {
+  function onAuthStateChanged(user: any) {
     setUser(user);
     if (initializing) {
       setInitializing(false);
@@ -23,7 +23,7 @@ export default function Login({user, setUser, setSignedIn}) {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  function signUpFunction(email, password) {
+  function signUpFunction(email: string, password: string) {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
@@ -42,8 +42,9 @@ export default function Login({user, setUser, setSignedIn}) {
         console.error(error);
       });
   }
+ 
 
-  function loginFunction(email, password) {
+  function loginFunction(email: string, password: string) {
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
@@ -81,6 +82,11 @@ export default function Login({user, setUser, setSignedIn}) {
             value={password}
             onChangeText={(passText) => setPassword(passText)}
           />
+          <TextInput
+            placeholder="Name"
+            value={userName}
+            onChangeText={(passText) => setuserName(passText)}
+          />
           <Button
             title="Login"
             onPress={() => loginFunction(email, password)}
@@ -93,7 +99,6 @@ export default function Login({user, setUser, setSignedIn}) {
             title="Get token"
             onPress={() => console.log('FireToke is:', getToken())}
           />
-          
         </View>
       </SafeAreaView>
     </>

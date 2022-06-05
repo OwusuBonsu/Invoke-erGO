@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,20 +12,19 @@ import {
   requestUserPermission,
   NotificationListener,
 } from './src/utils/pushNotification_helper';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Login from './Login';
 import Dashboard from './Dashboard';
-import { firebase } from '@react-native-firebase/messaging';
-import { HealthkitDataContext } from './context/HealthkitDataContext';
-import { Platform } from 'react-native';
-
-
+import {firebase} from '@react-native-firebase/messaging';
+import {HealthkitDataContext} from './context/HealthkitDataContext';
+import {Platform} from 'react-native';
 
 export default function App() {
   const [user, setUser] = useState();
   const [signedIn, setSignedIn] = useState(false);
+  const [injury, setInjury] = useState(false);
   const [healthKitData, getHealthKitData] = useState({});
-
+ 
   firebase.app();
   useEffect(() => {
     console.log('User: ' + JSON.stringify(user));
@@ -37,11 +36,20 @@ export default function App() {
       <SafeAreaView>
         {signedIn ? (
           <HealthkitDataContext.Provider
-            value={{ healthKitData, getHealthKitData }}>
+            value={{healthKitData, getHealthKitData}}>
             <Dashboard user={user} setSignedIn={setSignedIn} />
           </HealthkitDataContext.Provider>
         ) : (
           <Login user={user} setUser={setUser} setSignedIn={setSignedIn} />
+        )}
+
+        {injury ? (
+          <InjurySurvey user={user} setInjury={setInjury} />
+        ) : (
+          <HealthkitDataContext.Provider
+            value={{healthKitData, getHealthKitData}}>
+            <Dashboard user={user} setSignedIn={setSignedIn} />
+          </HealthkitDataContext.Provider>
         )}
       </SafeAreaView>
     </>
