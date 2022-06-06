@@ -10,50 +10,20 @@ import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import analytics from '@react-native-firebase/analytics';
 import DeviceInfo from 'react-native-device-info';
 
-export function onResult(QuerySnapshot) {
-  QuerySnapshot.forEach((documentSnapshot) => {
-    console.log('injuryLog ', documentSnapshot.id, documentSnapshot.data());
-    // Create a new field path
-    const fieldPath_injuryID = new firebase.firestore.FieldPath('injuryID');
-    const fieldPath_Latitude = new firebase.firestore.FieldPath('Latitude');
-    const fieldPath_Longitude = new firebase.firestore.FieldPath('Longitude');
-    var injuryID = documentSnapshot.get(fieldPath_injuryID);
-    var injuryLat = documentSnapshot.get(fieldPath_Latitude); //use for mapview
-    var injuryLong = documentSnapshot.get(fieldPath_Longitude);
-    console.log('injuryID ', injuryID);
 
-    console.log('Got Users collection result.');
-    Alert.alert('Injury Reported', 'Are you a witness?', [
-      {
-        text: 'No',
-        onPress: () => console.log('No Pressed'),
-        style: 'cancel',
-      },
-      {
-        text: 'Yes',
-        onPress: () => {
-          console.log('Yes Pressed');
-          SendInjuryWitness(injuryID);
-        },
-      },
-    ]);
-
-    function onError(error) {
-      console.error(error);
-    }
-  });
-}
-
-firestore()
-  .collection('injuryLogTest')
-  .orderBy('Time', 'desc')
-  .limit(1)
-  .onSnapshot(onResult); // listener for new injuries
-
-export function SendHealthData(getHealthKitData, healthKitData) {
+export function SendHealthData(
+  getHealthKitData,
+  healthKitData,
+  sethealthArray,
+  healthArray,
+) {
   getHealthKitData([]);
-  handleGetData(getHealthKitData);
-  //console.log(getHealthKitData);
+  sethealthArray([]);
+  handleGetData(getHealthKitData, sethealthArray);
+
+  console.log('health:', healthKitData);
+  console.log('hrv:', healthArray);
+
   firestore().collection('AlgorithmDataTest').add(healthKitData);
 }
 

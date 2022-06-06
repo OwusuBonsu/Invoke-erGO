@@ -7,6 +7,7 @@ import {
   Text,
   StatusBar,
   ShadowPropTypesIOS,
+  Alert,
 } from 'react-native';
 import {
   requestUserPermission,
@@ -15,16 +16,17 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Login from './Login';
 import Dashboard from './Dashboard';
-import {firebase} from '@react-native-firebase/messaging';
 import {HealthkitDataContext} from './context/HealthkitDataContext';
 import {Platform} from 'react-native';
+import {firebase} from '@react-native-firebase/messaging';
+
 
 export default function App() {
   const [user, setUser] = useState();
   const [signedIn, setSignedIn] = useState(false);
   const [injury, setInjury] = useState(false);
   const [healthKitData, getHealthKitData] = useState({});
- 
+
   firebase.app();
   useEffect(() => {
     console.log('User: ' + JSON.stringify(user));

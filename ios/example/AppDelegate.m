@@ -16,6 +16,7 @@
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
 
 #import <Firebase.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
@@ -35,7 +36,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  //[GPSServices provideAPIkey: "AIzaSyDFNR_p1wDhI542Y1raBW1xSJt9MOop7zk"]
+  //[GMSServices provideAPIKey:@"AIzaSyDFNR_p1wDhI542Y1raBW1xSJt9MOop7zk"];
     if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
       
