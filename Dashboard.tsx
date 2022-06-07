@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {HealthkitDataContext} from './context/HealthkitDataContext';
-
+//import MapView from 'react-native-maps';
 import Geocoder from 'react-native-geocoding';
 import {setLocation} from './src/utils/LocationServices';
 import {
@@ -51,6 +51,8 @@ export default function Dashboard({user, setSignedIn}) {
   useEffect(() => {
     console.log(databaseData);
   }, [databaseData]);
+
+  
 
   return (
     <>
@@ -96,7 +98,6 @@ export default function Dashboard({user, setSignedIn}) {
               <TextInput
                 style={styles.textInput}
                 placeholder="Do you speak English?"
-                placeholderTextColor="#9a73ef"
                 value={english_question}
                 onChangeText={(text) => {
                   setEnglish_question(text);
@@ -111,7 +112,6 @@ export default function Dashboard({user, setSignedIn}) {
               <TextInput
                 style={styles.textInput}
                 placeholder="Name"
-                placeholderTextColor="#9a73ef"
                 value={userName}
                 onChangeText={(userName) => {
                   setuserName(userName);
@@ -126,7 +126,6 @@ export default function Dashboard({user, setSignedIn}) {
               <TextInput
                 style={styles.textInput}
                 placeholder="What Language you speak?"
-                placeholderTextColor="#9a73ef"
                 value={language}
                 onChangeText={(languageText) => {
                   setLanguage(languageText);
@@ -141,7 +140,6 @@ export default function Dashboard({user, setSignedIn}) {
               <TextInput
                 style={styles.textInput}
                 placeholder="Anecdote"
-                placeholderTextColor="#9a73ef"
                 value={anecdote}
                 onChangeText={(ancedcoteText) => {
                   setAnecdote(ancedcoteText);
@@ -156,7 +154,6 @@ export default function Dashboard({user, setSignedIn}) {
               <TextInput
                 style={styles.textInput}
                 placeholder="Body Part Injured?"
-                placeholderTextColor="#9a73ef"
                 value={bodyPart}
                 onChangeText={(bodyText) => {
                   setBodyPart(bodyText);
@@ -171,7 +168,6 @@ export default function Dashboard({user, setSignedIn}) {
               <TextInput
                 style={styles.textInput}
                 placeholder="Please List Witnessess"
-                placeholderTextColor="#9a73ef"
                 value={observers}
                 onChangeText={(observeText) => {
                   setObservers(observeText);
@@ -217,6 +213,14 @@ export default function Dashboard({user, setSignedIn}) {
               </View>
               <Button title="Get location" onPress={() => setLocation()} />
               <Button title="Sign Out" onPress={signOut} />
+              {/* <MapView
+                initialRegion={{
+                  latitude: 37.78825,
+                  longitude: -122.4324,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}
+              /> */}
             </View>
           </View>
         </ScrollView>
