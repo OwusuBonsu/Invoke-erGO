@@ -10,18 +10,6 @@ import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import analytics from '@react-native-firebase/analytics';
 import DeviceInfo from 'react-native-device-info';
 
-<<<<<<< HEAD
-export function onResult(QuerySnapshot) {
-  QuerySnapshot.forEach((documentSnapshot) => {
-    console.log('injuryLog ', documentSnapshot.id, documentSnapshot.data());
-    // Create a new field path
-    const fieldPath = new firebase.firestore.FieldPath('injuryID');
-    var injuryID = documentSnapshot.get(fieldPath);
-
-    console.log('injuryID ', injuryID);
-=======
->>>>>>> e5be25c690256cf9209603cc1ca725b7c68ad510
-
 export function SendHealthData(
   getHealthKitData,
   healthKitData,
@@ -66,7 +54,6 @@ export const getToken = async () => {
 };
 
 export function SendInjuryWitness(injuryID) {
-
   var injuryReport = {
     injuryID: injuryID,
     device_Id: DeviceInfo.getUniqueId(),

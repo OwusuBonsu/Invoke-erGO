@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,15 +10,15 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {HealthkitDataContext} from './context/HealthkitDataContext';
-<<<<<<< HEAD
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { HealthkitDataContext } from './context/HealthkitDataContext';
+
 //import MapView from 'react-native-maps';
-=======
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
->>>>>>> e5be25c690256cf9209603cc1ca725b7c68ad510
+
+import MapView from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+
 import Geocoder from 'react-native-geocoding';
-import {setLocation} from './src/utils/LocationServices';
+import { setLocation } from './src/utils/LocationServices';
 import {
   signOut,
   SendInjuryLog,
@@ -26,8 +26,8 @@ import {
   SendHealthData,
 } from './src/utils/FirebaseUtils';
 
-export default function Dashboard({user, setSignedIn}) {
-  const {healthKitData, getHealthKitData} = useContext(HealthkitDataContext);
+export default function Dashboard({ user, setSignedIn }) {
+  const { healthKitData, getHealthKitData } = useContext(HealthkitDataContext);
   const [databaseData, getDatabaseData] = useState('');
   const [injuryData, getinjuryData] = useState({}); //injuryLog Data
   const [anecdote, setAnecdote] = useState('');
@@ -56,7 +56,7 @@ export default function Dashboard({user, setSignedIn}) {
     console.log(databaseData);
   }, [databaseData]);
 
-  
+
 
   return (
     <>
@@ -198,26 +198,26 @@ export default function Dashboard({user, setSignedIn}) {
                 }}>
                 {databaseData
                   ? Object.entries(databaseData).map(([key, value]) => {
-                      return (
-                        <View
-                          style={{
-                            width: '45%',
-                            backgroundColor: '#4D83B2',
-                            padding: 10,
-                            margin: 5,
-                            borderRadius: 10,
-                          }}>
-                          <View style={{}}>
-                            <Text style={{}}>{key}</Text>
-                          </View>
-                          <View style={{}}>
-                            <Text style={{fontWeight: 'bold', fontSize: 20}}>
-                              {value}
-                            </Text>
-                          </View>
+                    return (
+                      <View
+                        style={{
+                          width: '45%',
+                          backgroundColor: '#4D83B2',
+                          padding: 10,
+                          margin: 5,
+                          borderRadius: 10,
+                        }}>
+                        <View style={{}}>
+                          <Text style={{}}>{key}</Text>
                         </View>
-                      );
-                    })
+                        <View style={{}}>
+                          <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                            {value}
+                          </Text>
+                        </View>
+                      </View>
+                    );
+                  })
                   : null}
               </View>
               <Button title="Get location" onPress={() => setLocation()} />
@@ -234,7 +234,6 @@ export default function Dashboard({user, setSignedIn}) {
           </View>
           <View style={styles.container}>
             <MapView
-              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
               style={styles.map}
               region={{
                 latitude: 37.78825,
