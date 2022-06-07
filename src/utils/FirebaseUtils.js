@@ -10,6 +10,7 @@ import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import analytics from '@react-native-firebase/analytics';
 import DeviceInfo from 'react-native-device-info';
 
+<<<<<<< HEAD
 export function onResult(QuerySnapshot) {
   QuerySnapshot.forEach((documentSnapshot) => {
     console.log('injuryLog ', documentSnapshot.id, documentSnapshot.data());
@@ -18,39 +19,22 @@ export function onResult(QuerySnapshot) {
     var injuryID = documentSnapshot.get(fieldPath);
 
     console.log('injuryID ', injuryID);
+=======
+>>>>>>> e5be25c690256cf9209603cc1ca725b7c68ad510
 
-    console.log('Got Users collection result.');
-    Alert.alert('Injury Reported', 'Are you a witness?', [
-      {
-        text: 'No',
-        onPress: () => console.log('No Pressed'),
-        style: 'cancel',
-      },
-      {
-        text: 'Yes',
-        onPress: () => {
-          console.log('Yes Pressed');
-          SendInjuryWitness(injuryID);
-        },
-      },
-    ]);
-
-    function onError(error) {
-      console.error(error);
-    }
-  });
-}
-
-firestore()
-  .collection('injuryLogTest')
-  .orderBy('Time', 'desc')
-  .limit(1)
-  .onSnapshot(onResult); // listener for new injuries
-
-export function SendHealthData(getHealthKitData, healthKitData) {
+export function SendHealthData(
+  getHealthKitData,
+  healthKitData,
+  sethealthArray,
+  healthArray,
+) {
   getHealthKitData([]);
-  handleGetData(getHealthKitData);
-  //console.log(getHealthKitData);
+  sethealthArray([]);
+  handleGetData(getHealthKitData, sethealthArray);
+
+  console.log('health:', healthKitData);
+  console.log('hrv:', healthArray);
+
   firestore().collection('AlgorithmDataTest').add(healthKitData);
 }
 

@@ -12,7 +12,11 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {HealthkitDataContext} from './context/HealthkitDataContext';
+<<<<<<< HEAD
 //import MapView from 'react-native-maps';
+=======
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+>>>>>>> e5be25c690256cf9209603cc1ca725b7c68ad510
 import Geocoder from 'react-native-geocoding';
 import {setLocation} from './src/utils/LocationServices';
 import {
@@ -32,7 +36,7 @@ export default function Dashboard({user, setSignedIn}) {
   const [language, setLanguage] = useState('');
   const [userName, setuserName] = useState('');
   const [english_question, setEnglish_question] = useState('');
-
+  const [healthArray, sethealthArray] = useState([]);
   // const handlePressGetAuthStatus = () => {
   //   AppleHealthKit.getAuthStatus(permissions, (err, result) => {
   //     if (err) {
@@ -86,7 +90,12 @@ export default function Dashboard({user, setSignedIn}) {
               <Button
                 title="Retrieve health data and send to firebase"
                 onPress={() => {
-                  SendHealthData(getHealthKitData, healthKitData);
+                  SendHealthData(
+                    getHealthKitData,
+                    healthKitData,
+                    sethealthArray,
+                    healthArray,
+                  );
                 }}
               />
               <Button
@@ -223,6 +232,18 @@ export default function Dashboard({user, setSignedIn}) {
               /> */}
             </View>
           </View>
+          <View style={styles.container}>
+            <MapView
+              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              style={styles.map}
+              region={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+              }}
+            />
+          </View>
         </ScrollView>
       </SafeAreaView>
     </>
@@ -240,6 +261,16 @@ const styles = StyleSheet.create({
   textInput: {
     color: 'green',
     fontSize: 20,
+  },
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    height: 400,
+    width: 400,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
 
   body: {

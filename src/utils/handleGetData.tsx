@@ -1,4 +1,4 @@
-import {useEffect, useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import AppleHealthKit, {
   HealthValue,
   HealthKitPermissions,
@@ -6,7 +6,7 @@ import AppleHealthKit, {
 } from 'react-native-health';
 import {HealthkitDataContext} from '../../context/HealthkitDataContext';
 
-export default function handleGetData(getHealthKitData) {
+export default function handleGetData(getHealthKitData, sethealthArray) {
   const permissions = {
     permissions: {
       read: [
@@ -16,7 +16,7 @@ export default function handleGetData(getHealthKitData) {
         AppleHealthKit.Constants.Permissions.BiologicalSex, //getBiologicalSex
         //AppleHealthKit.Constants.Permissions.BloodType, //getBloodType
         //AppleHealthKit.Constants.Permissions.WaistCircumference, //getLatestWaistCircumference
-         AppleHealthKit.Constants.Permissions.DateOfBirth,
+        AppleHealthKit.Constants.Permissions.DateOfBirth,
         // Body Measurements (done)
         //AppleHealthKit.Constants.Permissions.BodyMass, //can we delete this for weight instead of this
         //AppleHealthKit.Constants.Permissions.BodyFatPercentage, //getLatestBodyFatPercentage
@@ -108,8 +108,8 @@ export default function handleGetData(getHealthKitData) {
     /* Can now read or write to HealthKit */
 
     let options = {
-      startDate: new Date(2016, 0, 0).toISOString(), //change to todays date minus 7 days
-      endDate: new Date().toISOString(), //change to todays date minus 7 day
+      startDate: new Date(2018, 10, 0).toISOString(), //change to todays date minus 7 days
+      endDate: new Date(2022, 5, 0).toISOString(), //change to todays date minus 7 day
     };
 
     //-----------Data Retrieval--------------// ask Owusu how we can condense this to 1 function for cleanliness
@@ -160,7 +160,7 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
-          getHealthKitData(healthKitData => [...healthKitData, results])
+          getHealthKitData((healthKitData) => [...healthKitData, results]);
         }
       },
     );
@@ -384,6 +384,17 @@ export default function handleGetData(getHealthKitData) {
     //     }
     //   },
     // );
+    function buildArray(results) {
+      var array = [''];
+      for (let i = 0; i < results.length - 1; i++) {
+        array[i] = results[i].value;
+       
+        //sethealthArray(array);
+      }
+       //console.log('hrv build array:', array);
+      return array;
+    }
+
     AppleHealthKit.getHeartRateVariabilitySamples(
       //add in all of the functions to be able to get this data
       options,
@@ -391,9 +402,10 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
+          //console.log('hrv build array:', hrv_array);
           getHealthKitData((healthKitData) => ({
             ...healthKitData,
-            HeartRateVariability: results[0].value,
+            HeartRateVariability: buildArray(results),
           }));
         }
       },
@@ -517,9 +529,10 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
+          //console.log('hrv build array:', hrv_array);
           getHealthKitData((healthKitData) => ({
             ...healthKitData,
-            WalkingSteadiness: results[0].value,
+            AppleWalkingSteadiness: buildArray(results),
           }));
         }
       },
@@ -575,9 +588,10 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
+          //console.log('hrv build array:', hrv_array);
           getHealthKitData((healthKitData) => ({
             ...healthKitData,
-            WalkingAsymmetryPercentage: results[0].value,
+            WalkingAsymmetryPercentage: buildArray(results),
           }));
         }
       },
@@ -589,9 +603,10 @@ export default function handleGetData(getHealthKitData) {
         if (err || results == null) {
           return;
         } else {
+          //console.log('hrv build array:', hrv_array);
           getHealthKitData((healthKitData) => ({
             ...healthKitData,
-            WalkingDoubleSupportPercentage: results[0].value,
+            WalkingDoubleSupportPercentage: buildArray(results),
           }));
         }
       },

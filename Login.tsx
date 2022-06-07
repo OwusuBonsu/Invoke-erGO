@@ -54,15 +54,7 @@ export default function Login({user, setUser, setSignedIn}) {
       .catch((err) => console.log(err));
   }
 
-  firebase
-    .messaging()
-    .subscribeToTopic('injuryLog')
-    .then(() => console.log('Subscribed to injuryLog'));
-
-  firebase
-    .messaging()
-    .subscribeToTopic('AlgorithmData')
-    .then(() => console.log('Subscribed to AlgorithmData!'));
+ 
 
   if (initializing) {
     return null;
